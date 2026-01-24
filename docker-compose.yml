@@ -1,0 +1,68 @@
+services:
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile:Z
+      - ./certs:/certs:ro,Z
+      - caddy_data:/data
+    networks:
+      - stack-net
+
+  api:
+    image: duckautomata/live-transcript-server:latest
+    restart: always
+    volumes:
+      - ./config/live-transcript.yaml:/app/config.yaml:ro,Z
+      - ./data/api:/app/tmp:Z
+    networks:
+      - stack-net
+
+  archive:
+    image: duckautomata/archived-transcript-server:latest
+    restart: always
+    volumes:
+      - ./config/archived-transcript.yaml:/app/config.yaml:ro,Z
+      - ./data/archive:/app/tmp:Z
+    networks:
+      - stack-net
+
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:Z
+      - ./data/prometheus:/prometheus:Z
+    networks:
+      - stack-net
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    volumes:
+      - ./data/grafana:/var/lib/grafana:Z
+      - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:Z
+    networks:
+      - stack-net
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    restart: always
+    command: -H unix:///bitnami/docker/docker.sock
+    ports:
+      # This prevents external access, but allows SSH tunneling.
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - /run/user/1000/docker.sock:/bitnami/docker/docker.sock:Z
+      - ./data/portainer:/data:Z
+    networks:
+      - stack-net
+
+volumes:
+  caddy_data:
+
+networks:
+  stack-net:
+    driver: bridge

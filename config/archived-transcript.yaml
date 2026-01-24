@@ -1,0 +1,9 @@
+# Use command to generate creds
+# openssl rand -base64 32
+api_key: ""
+
+membership:
+  - Dokibird
+  - MintFantome
+
+key_ttl_days: 45

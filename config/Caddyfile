@@ -1,0 +1,25 @@
+# Define a snippet for security headers
+(secure) {
+    header {
+        Strict-Transport-Security "max-age=43200; includeSubDomains; preload"
+        X-Frame-Options "DENY"
+    }
+}
+
+api.duck-automata.com {
+    import secure
+    tls /certs/cloudflare.crt /certs/cloudflare.key
+    reverse_proxy api:8080
+}
+
+archive.duck-automata.com {
+    import secure
+    tls /certs/cloudflare.crt /certs/cloudflare.key
+    reverse_proxy archive:8080
+}
+
+grafana.duck-automata.com {
+    import secure
+    tls /certs/cloudflare.crt /certs/cloudflare.key
+    reverse_proxy grafana:3000
+}

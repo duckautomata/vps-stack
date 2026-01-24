@@ -1,0 +1,23 @@
+# Use command to generate creds
+# openssl rand -base64 32
+credentials:
+  apiKey: ""
+
+storage:
+  type: "r2" # "local" or "r2"
+  r2:
+    accountId: ""
+    accessKeyId: ""
+    secretAccessKey: ""
+    bucket: ""
+    publicUrl: ""
+
+channels:
+  - name: doki
+    numPastStreams: 3
+  - name: mint
+    numPastStreams: 2
+  - name: test
+    numPastStreams: 0
+  - name: mock
+    numPastStreams: 0

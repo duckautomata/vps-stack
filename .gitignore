@@ -1,0 +1,7 @@
+*.key
+*.crt
+
+data/*
+!data/README
+
+steps.md
