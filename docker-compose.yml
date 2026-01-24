@@ -55,7 +55,7 @@ services:
       # This prevents external access, but allows SSH tunneling.
       - "127.0.0.1:9000:9000"
     volumes:
-      - /run/user/${USER_ID}/docker.sock:/bitnami/docker/docker.sock:Z
+      - /run/user/${UID}/docker.sock:/bitnami/docker/docker.sock:Z
       - ./data/portainer:/data:Z
     networks:
       - stack-net
