@@ -17,6 +17,12 @@ Because of this, we will use an Origin Server certificate since it lasts for 15 
 
 Go to [certs](/certs/) and follow the guide to add certs.
 
+## Setting up Admin console
+
+1. Run `docker run --rm caddy caddy hash-password --plaintext "example-password"` and change the example password with one you want to use. It should output a hash starting with `$2a$14$`
+
+Inside [Caddyfile](./config/Caddyfile), change `$2a$14$your_long_hash_string_here...` with the hash created above
+
 ## Creating .env file
 should return UID=1...
 
