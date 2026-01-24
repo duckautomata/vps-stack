@@ -12,12 +12,12 @@ chmod -R 777 ./data/prometheus ./data/prometheus ./data/api ./data/archive
 ## Starting stack
 
 ```bash
-UID=$(id -u) docker compose up -d
+USER_ID=$(id -u) docker compose up -d
 ```
 
 ## Applying changed
 
 ```bash
-UID=$(id -u) docker compose up -d
-UID=$(id -u) docker compose restart caddy
+USER_ID=$(id -u) docker compose up -d
+USER_ID=$(id -u) docker compose restart caddy
 ```
