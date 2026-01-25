@@ -6,3 +6,4 @@ data/*
 !data/README
 
 steps.md
+.env
