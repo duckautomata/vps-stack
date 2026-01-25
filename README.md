@@ -48,3 +48,13 @@ docker compose up -d
 docker compose up -d
 docker compose restart caddy
 ```
+
+## Updated all images
+```bash
+docker compose pull && docker compose up -d && docker image prune -f
+```
+
+for updating a specific server
+```bash
+docker compose pull api && docker compose up -d api && docker image prune -f
+```
