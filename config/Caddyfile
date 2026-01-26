@@ -4,6 +4,7 @@
         Strict-Transport-Security "max-age=43200; includeSubDomains; preload"
         X-Frame-Options "DENY"
     }
+    encode gzip
 }
 
 (secure_admin) {
@@ -11,7 +12,7 @@
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
         X-Frame-Options "DENY"
     }
-    basicauth {
+    basic_auth {
         admin $2a$14$your_long_hash_string_here...
     }
 }
