@@ -20,15 +20,6 @@ Go to [certs](/certs/) and follow the guide to add certs.
 ## Setting up Portainers console (if wanted)
 If you do not want this, then you can remove it from docker-compose and skip this part.
 
-1. Run `docker run --rm caddy caddy hash-password --plaintext "example-password"` and change the example password with one you want to use. It should output a hash starting with `$2a$14$`
-
-2. Inside [Caddyfile](./config/Caddyfile), change `$2a$14$your_long_hash_string_here...` with the hash created above
-
-When loading into portainers, it will require you to login. Username is the word before the hash in part 2. and password is what you used in step 1.
-
-### Creating .env file
-Only needed if using Portainers.
-
 Run the script bellow in the repo's root directory. Should return UID=1...
 
 ```bash
