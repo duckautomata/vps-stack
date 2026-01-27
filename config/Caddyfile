@@ -1,10 +1,12 @@
 # Define a snippet for security headers
 (secure) {
     header {
-        Strict-Transport-Security "max-age=43200; includeSubDomains; preload"
         X-Frame-Options "DENY"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "no-referrer"
+        -Server
     }
-    encode gzip
+    encode zstd gzip
 }
 
 portainer.duck-automata.com {
