@@ -14,6 +14,8 @@ services:
   api:
     image: duckautomata/live-transcript-server:latest
     restart: always
+    ports:
+      - "8080:8080" # used to directly connect to the API for uploading media so we don't go through Cloudflare.
     volumes:
       - ./config/live-transcript.yaml:/app/config.yaml:ro,Z
       - ./data/api:/app/tmp:Z
