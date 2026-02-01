@@ -4,6 +4,7 @@ services:
     restart: unless-stopped
     ports:
       - "443:443"
+      - "443:443/udp"
     volumes:
       - ./config/Caddyfile:/etc/caddy/Caddyfile:Z
       - ./certs:/certs:ro,Z
@@ -46,6 +47,8 @@ services:
     volumes:
       - ./data/grafana:/var/lib/grafana:Z
       - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:Z
+    environment:
+      - GF_SERVER_ROOT_URL=https://grafana.duck-automata.com/
     networks:
       - stack-net
 
