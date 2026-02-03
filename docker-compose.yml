@@ -77,11 +77,13 @@ services:
       - ./config/promtail.yaml:/etc/promtail/config.yml:Z
       - ./data/api:/var/log/api:ro,Z
       - ./data/archive:/var/log/archive:ro,Z
+      - promtail_data:/etc/promtail
     networks:
       - stack-net
 
 volumes:
   caddy_data:
+  promtail_data:
 
 networks:
   stack-net:
