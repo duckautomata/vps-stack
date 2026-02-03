@@ -9,24 +9,25 @@
       "pluginName": "Loki"
     }
   ],
+  "__elements": {},
   "__requires": [
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "12.2.1"
-    },
-    {
-      "type": "datasource",
-      "id": "loki",
-      "name": "Loki",
-      "version": "1.0.0"
+      "version": "12.3.2"
     },
     {
       "type": "panel",
       "id": "logs",
       "name": "Logs",
       "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "loki",
+      "name": "Loki",
+      "version": "12.3.2"
     }
   ],
   "annotations": {
@@ -48,9 +49,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -58,7 +57,7 @@
         "uid": "${DS_LOKI}"
       },
       "gridPos": {
-        "h": 22,
+        "h": 20,
         "w": 24,
         "x": 0,
         "y": 0
@@ -66,23 +65,29 @@
       "id": 1,
       "options": {
         "dedupStrategy": "none",
+        "detailsMode": "sidebar",
+        "enableInfiniteScrolling": false,
         "enableLogDetails": true,
-        "prettifyLogMessage": false,
+        "fontSize": "default",
+        "prettifyLogMessage": true,
         "showCommonLabels": false,
+        "showControls": false,
         "showLabels": false,
         "showTime": true,
         "sortOrder": "Descending",
-        "wrapLogMessage": false
+        "syntaxHighlighting": true,
+        "wrapLogMessage": true
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
             "type": "loki",
             "uid": "${DS_LOKI}"
           },
-          "editorMode": "builder",
-          "expr": "{job=~\"$job\", level=~\"$level\"}",
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "{job=~\"$job\", level=~\"$level\"} \r\n|= \"$search\"\r\n| regexp \"(?P<raw_line>^.*$)\"             # 1. Capture the full original line as a backup\r\n| json                                    # 2. Reliably extract msg, level, time\r\n| regexp `^\\{.*\"msg\":\".*?\"(?:,(?P<rest>.*))?\\}$` # 3. Try to capture \"rest\" (optional comma)\r\n| line_format \"{{.job}} {{.msg}}\\n\\t{{if .rest}}{{.rest}}{{else}}{{.raw_line}}{{end}}\"",
           "queryType": "range",
           "refId": "A"
         }
@@ -91,73 +96,78 @@
       "type": "logs"
     }
   ],
-  "refresh": "",
-  "schemaVersion": 39,
+  "preload": false,
+  "refresh": "auto",
+  "schemaVersion": 42,
   "tags": [
     "logs"
   ],
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "api",
-          "value": "api"
-        },
+        "allValue": ".+",
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${DS_LOKI}"
         },
         "definition": "label_values(job)",
-        "hide": 0,
         "includeAll": true,
-        "allValue": ".+",
         "label": "Job",
         "multi": true,
         "name": "job",
         "options": [],
         "query": "label_values(job)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "allValue": ".+",
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${DS_LOKI}"
         },
         "definition": "label_values(level)",
-        "hide": 0,
         "includeAll": true,
         "label": "Level",
         "multi": true,
-        "allValue": ".+",
         "name": "level",
         "options": [],
         "query": "label_values({job=~\"$job\"}, level)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "label": "Search",
+        "name": "search",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Logs",
   "uid": "logs",
-  "version": 1,
-  "weekStart": ""
+  "version": 3,
+  "weekStart": "",
+  "id": null
 }
