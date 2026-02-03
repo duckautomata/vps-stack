@@ -62,6 +62,24 @@ services:
     networks:
       - stack-net
 
+  loki:
+    image: grafana/loki:latest
+    restart: unless-stopped
+    volumes:
+      - ./config/loki.yaml:/etc/loki/local-config.yaml:Z
+    networks:
+      - stack-net
+
+  promtail:
+    image: grafana/promtail:latest
+    restart: unless-stopped
+    volumes:
+      - ./config/promtail.yaml:/etc/promtail/config.yml:Z
+      - ./data/api:/var/log/api:ro,Z
+      - ./data/archive:/var/log/archive:ro,Z
+    networks:
+      - stack-net
+
 volumes:
   caddy_data:
 
