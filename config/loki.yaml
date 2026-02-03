@@ -32,6 +32,13 @@ schema_config:
       index:
         prefix: index_
         period: 24h
+    - from: 2026-02-03
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
 
 ruler:
   alertmanager_url: http://localhost:9093
