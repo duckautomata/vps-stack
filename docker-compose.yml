@@ -120,8 +120,11 @@ services:
       DB_PASSWORD: "secure_password_here"
       # Cache
       CACHE_ENABLED: "true"
+      CACHE_AUTO_PURGE: "true"
       CACHE_STORE: "redis"
       CACHE_REDIS: "redis://redis:6379"
+      REDIS_HOST: "redis" # sometimes needed if Directus does not pick up the CACHE_REDIS variable
+      REDIS_PORT: "6379"
       # Admin
       ADMIN_EMAIL: "admin@example.com"
       ADMIN_PASSWORD: "password"
