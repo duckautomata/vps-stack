@@ -81,7 +81,6 @@ services:
     networks:
       - stack-net
 
-
   postgres:
     image: postgres:16
     restart: always
@@ -112,7 +111,6 @@ services:
       KEY: "generate-a-random-uuid-here"
       SECRET: "generate-another-random-uuid"
       PUBLIC_URL: "https://directus.duck-automata.com"
-      
       # Database
       DB_CLIENT: "pg"
       DB_HOST: "postgres"
@@ -120,16 +118,13 @@ services:
       DB_DATABASE: "directus"
       DB_USER: "directus"
       DB_PASSWORD: "secure_password_here"
-      
       # Cache
       CACHE_ENABLED: "true"
       CACHE_STORE: "redis"
       CACHE_REDIS: "redis://redis:6379"
-      
       # Admin
       ADMIN_EMAIL: "admin@example.com"
       ADMIN_PASSWORD: "password"
-      
       # Storage (R2)
       STORAGE_LOCATIONS: "r2"
       STORAGE_R2_DRIVER: "s3"
@@ -140,11 +135,9 @@ services:
       STORAGE_R2_ENDPOINT: "https://<account_id>.r2.cloudflarestorage.com"
       # This allows Directus to generate public URLs pointing to your custom R2 domain
       STORAGE_R2_PUBLIC_URL: "https://content.duck-automata.com"
-      
       # CORS
       CORS_ENABLED: "true"
       CORS_ORIGIN: "https://www.duck-automata.com,http://localhost:5173,http://localhost:4173,http://localhost:3000"
-
     networks:
       - stack-net
 
